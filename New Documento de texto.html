@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transform Fitness | Your Ultimate Fitness Journey</title>
+    <style>
+        /* --- CSS RESET & BASIC SETUP --- */
+        :root {
+            --primary-color: #10B981; /* Neon Green */
+            --dark-bg: #111827;
+            --dark-card: #1F2937;
+            --text-light: #F9FAFB;
+            --text-medium: #9CA3AF;
+            --text-dark: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        h1, h2, h3 {
+            line-height: 1.2;
+            font-weight: 800;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--text-dark);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+        }
+
+        /* --- FADE-IN ANIMATION --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        .navbar {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: none;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            color: var(--text-medium);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- PURE CSS HAMBURGER MENU --- */
+        .hamburger-menu {
+            display: block;
+            cursor: pointer;
+        }
+
+        .hamburger-menu .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-light);
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+
+        #nav-toggle {
+            display: none;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: var(--dark-bg);
+            padding: 1rem 0;
+        }
+        
+        #nav-toggle:checked ~ .mobile-nav {
+            display: block;
+        }
+        
+        #nav-toggle:checked ~ .hamburger-menu .bar:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        #nav-toggle:checked ~ .hamburger-menu .bar:nth-child(2) {
+            opacity: 0;
+        }
+        #nav-toggle:checked ~ .hamburger-menu .bar:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+            text-align: center;
+        }
+
+        .mobile-nav-links li {
+            margin: 1rem 0;
+        }
+
+        .mobile-nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            background: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1740&auto=format&fit=crop') no-repeat center center/cover;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(17, 24, 39, 0.7);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: var(--text-medium);
+        }
+
+        /* --- ABOUT SECTION --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .about-text h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* --- PROGRAMS SECTION --- */
+        .programs-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .program-card {
+            background: var(--dark-card);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .program-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .program-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .program-card-content {
+            padding: 1.5rem;
+        }
+        
+        .program-card-content h3 {
+             color: var(--primary-color);
+             margin-bottom: 0.5rem;
+        }
+
+        /* --- TRAINERS SECTION --- */
+        .trainers-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .trainer-card {
+            background: var(--dark-card);
+            border-radius: 10px;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .trainer-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .trainer-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .trainer-card p {
+            color: var(--text-medium);
+            font-style: italic;
+        }
+
+        /* --- TESTIMONIALS --- */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .testimonial-card {
+            background-color: var(--dark-card);
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: var(--text-medium);
+        }
+
+        .testimonial-card .author {
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        /* --- PRICING SECTION --- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .pricing-plan {
+            background-color: var(--dark-card);
+            padding: 2.5rem 2rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .pricing-plan:hover, .pricing-plan.featured {
+            border-color: var(--primary-color);
+        }
+
+        .pricing-plan h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-plan .price {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pricing-plan .price span {
+            font-size: 1rem;
+            font-weight: normal;
+            color: var(--text-medium);
+        }
+
+        .pricing-plan ul {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+            display: inline-block;
+        }
+
+        .pricing-plan ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .pricing-plan ul li::before {
+            content: '✓';
+            color: var(--primary-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        /* --- CALORIE CALCULATOR SECTION --- */
+        .calculator-wrapper {
+            background-color: var(--dark-card);
+            padding: 2rem;
+            border-radius: 10px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .calculator-form .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .calculator-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-medium);
+        }
+
+        .calculator-form input[type="number"],
+        .calculator-form select {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--dark-bg);
+            border: 1px solid #374151;
+            border-radius: 5px;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .calculator-result {
+            background-color: var(--dark-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .calculator-result h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .calorie-display {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .calorie-display span {
+            font-size: 1rem;
+            color: var(--text-medium);
+        }
+
+        #result-text {
+            display: none; /* Initially hidden */
+        }
+        
+
+        /* --- CTA SECTION --- */
+        .cta {
+            background: linear-gradient(45deg, var(--primary-color), #059669);
+            text-align: center;
+            padding: 4rem 2rem;
+            border-radius: 10px;
+        }
+
+        .cta h2 {
+            color: var(--text-dark);
+        }
+
+        .cta .btn {
+            background-color: var(--text-light);
+            color: var(--text-dark);
+        }
+
+        /* --- FOOTER --- */
+        .footer {
+            background-color: var(--dark-card);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-medium);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-icons {
+             list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-icons a {
+            color: var(--text-medium);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE DESIGN (TABLET & DESKTOP) --- */
+        @media (min-width: 768px) {
+            h1 { font-size: 4rem; }
+            h2 { font-size: 3rem; }
+            section { padding: 6rem 0; }
+
+            .nav-links { display: flex; }
+            .hamburger-menu { display: none; }
+            .mobile-nav { display: none; }
+
+            .about-grid { grid-template-columns: 1fr 1fr; }
+            .programs-grid { grid-template-columns: repeat(2, 1fr); }
+            .trainers-grid { grid-template-columns: repeat(2, 1fr); }
+            .pricing-grid { grid-template-columns: repeat(3, 1fr); }
+            .calculator-wrapper { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (min-width: 1024px) {
+            .programs-grid { grid-template-columns: repeat(4, 1fr); }
+            .trainers-grid { grid-template-columns: repeat(4, 1fr); }
+            .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="nav-logo">Transform<span>Fit</span></a>
+            
+            <input type="checkbox" id="nav-toggle">
+            <label for="nav-toggle" class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </label>
+            
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#programs">Programs</a></li>
+                <li><a href="#trainers">Trainers</a></li>
+                <li><a href="#calculator">Calculator</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <div class="mobile-nav">
+                <ul class="mobile-nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#programs">Programs</a></li>
+                    <li><a href="#trainers">Trainers</a></li>
+                    <li><a href="#calculator">Calculator</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content fade-in">
+                <h1>Transform Your Body, Transform Your Life</h1>
+                <p>Unlock your potential with our world-class trainers, state-of-the-art facilities, and personalized workout programs designed to help you succeed.</p>
+                <a href="#pricing" class="btn">Start Training Today</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="container">
+            <h2 class="fade-in">Our Mission</h2>
+            <div class="about-grid fade-in">
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1540496905036-5937c10647cc?q=80&w=1740&auto=format&fit=crop" alt="Fitness class in session">
+                </div>
+                <div class="about-text">
+                    <h3>Your Goal is Our Passion</h3>
+                    <p>We believe that fitness is not just about physical strength, but about building a stronger, more resilient self. Our mission is to provide a supportive and motivating environment where you can challenge your limits, celebrate your victories, and become the best version of yourself, inside and out. We are committed to your journey, every step of the way.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Programs Section -->
+        <section id="programs" class="container">
+            <h2 class="fade-in">Our Programs</h2>
+            <div class="programs-grid fade-in">
+                <!-- Program Card 1 -->
+                <div class="program-card">
+                    <img src="https://images.unsplash.com/photo-1517836357463-d25769937e4c?q=80&w=1740&auto=format&fit=crop" alt="Strength Training">
+                    <div class="program-card-content">
+                        <h3>Strength Training</h3>
+                        <p>Build muscle and increase your power with our comprehensive strength programs, suitable for all levels.</p>
+                    </div>
+                </div>
+                <!-- Program Card 2 -->
+                <div class="program-card">
+                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1820&auto=format&fit=crop" alt="Yoga & Flexibility">
+                    <div class="program-card-content">
+                        <h3>Yoga & Flexibility</h3>
+                        <p>Improve your balance, flexibility, and mindfulness with our Vinyasa and Hatha yoga classes.</p>
+                    </div>
+                </div>
+                <!-- Program Card 3 -->
+                <div class="program-card">
+                    <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=1738&auto=format&fit=crop" alt="High-Intensity Interval Training">
+                    <div class="program-card-content">
+                        <h3>HIIT Workouts</h3>
+                        <p>Burn calories and boost your metabolism with our high-energy, high-intensity interval training sessions.</p>
+                    </div>
+                </div>
+                <!-- Program Card 4 -->
+                <div class="program-card">
+                    <img src="https://images.unsplash.com/photo-1554344728-77cf90d922a2?q=80&w=1740&auto=format&fit=crop" alt="Personal Training">
+                    <div class="program-card-content">
+                        <h3>Personal Training</h3>
+                        <p>Get one-on-one guidance and a customized workout plan to achieve your specific fitness goals faster.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trainers Section -->
+        <section id="trainers" class="container">
+            <h2 class="fade-in">Meet Our Expert Trainers</h2>
+            <div class="trainers-grid fade-in">
+                <!-- Trainer 1 -->
+                <div class="trainer-card">
+                    <img src="https://images.unsplash.com/photo-1577221084712-45b044c67917?q=80&w=1887&auto=format&fit=crop" alt="Trainer Jane Doe">
+                    <h3>Jessica Wu</h3>
+                    <p>Strength & Conditioning</p>
+                </div>
+                 <!-- Trainer 2 -->
+                 <div class="trainer-card">
+                    <img src="https://images.unsplash.com/photo-1615911217512-23719a95d050?q=80&w=1887&auto=format&fit=crop" alt="Trainer Mike Ross">
+                    <h3>Mike Ross</h3>
+                    <p>HIIT & Endurance</p>
+                </div>
+                 <!-- Trainer 3 -->
+                 <div class="trainer-card">
+                    <img src="https://images.unsplash.com/photo-1594737625782-7a7160799128?q=80&w=1887&auto=format&fit=crop" alt="Trainer Emily Chen">
+                    <h3>Emily Chen</h3>
+                    <p>Yoga & Pilates</p>
+                </div>
+                 <!-- Trainer 4 -->
+                 <div class="trainer-card">
+                    <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=1740&auto=format&fit=crop" alt="Trainer David Lee">
+                    <h3>David Lee</h3>
+                    <p>Functional Fitness</p>
+                </div>
+            </div>
+        </section>
+
+         <!-- Testimonials Section -->
+        <section id="testimonials" class="container">
+            <h2 class="fade-in">What Our Members Say</h2>
+            <div class="testimonials-grid fade-in">
+                <div class="testimonial-card">
+                    <p>"TransformFit is more than a gym; it's a community. The trainers are incredibly supportive and have helped me achieve goals I never thought possible. My life has completely changed for the better!"</p>
+                    <p class="author">- Sarah L.</p>
+                </div>
+                 <div class="testimonial-card">
+                    <p>"The best HIIT classes in the city, hands down. The energy is amazing and every workout is a new challenge. I've never been stronger or more confident. Highly recommended!"</p>
+                    <p class="author">- Mark T.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calorie Calculator Section -->
+        <section id="calculator" class="container">
+            <h2 class="fade-in">Daily Calorie Needs</h2>
+            <div class="calculator-wrapper fade-in">
+                <div class="calculator-form">
+                    <form id="calorie-form">
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender" name="gender">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Age (years)</label>
+                            <input type="number" id="age" name="age" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Weight (kg)</label>
+                            <input type="number" id="weight" name="weight" required>
+                        </div>
+                         <div class="form-group">
+                            <label for="height">Height (cm)</label>
+                            <input type="number" id="height" name="height" required>
+                        </div>
+                        <button type="submit" class="btn">Calculate</button>
+                    </form>
+                </div>
+                <div class="calculator-result">
+                    <div id="result-text">
+                        <h3>Your Estimated Daily Needs</h3>
+                        <p class="calorie-display"><span id="calorie-result">0</span> <span>kcal</span></p>
+                        <p>This is your Basal Metabolic Rate (BMR), the calories your body needs at rest.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Pricing Section -->
+        <section id="pricing" class="container">
+            <h2 class="fade-in">Choose Your Plan</h2>
+            <div class="pricing-grid fade-in">
+                <!-- Plan 1 -->
+                <div class="pricing-plan">
+                    <h3>Basic</h3>
+                    <p class="price">$39<span>/mo</span></p>
+                    <ul>
+                        <li>Gym Access</li>
+                        <li>Group Classes</li>
+                        <li>Locker Rooms</li>
+                        <li>-</li>
+                    </ul>
+                    <a href="#" class="btn">Select Plan</a>
+                </div>
+                <!-- Plan 2 (Featured) -->
+                <div class="pricing-plan featured">
+                    <h3>Pro</h3>
+                    <p class="price">$69<span>/mo</span></p>
+                    <ul>
+                        <li>Everything in Basic</li>
+                        <li>Personal Training (2/mo)</li>
+                        <li>Sauna & Steam Room</li>
+                        <li>Nutritional Guidance</li>
+                    </ul>
+                    <a href="#" class="btn">Select Plan</a>
+                </div>
+                <!-- Plan 3 -->
+                <div class="pricing-plan">
+                    <h3>Elite</h3>
+                    <p class="price">$99<span>/mo</span></p>
+                    <ul>
+                        <li>Everything in Pro</li>
+                        <li>Unlimited Personal Training</li>
+                        <li>Towel Service</li>
+                        <li>Guest Passes</li>
+                    </ul>
+                    <a href="#" class="btn">Select Plan</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA Section -->
+        <section id="contact" class="container">
+            <div class="cta fade-in">
+                <h2>Ready to Start Your Transformation?</h2>
+                <p style="color: #111827; margin: 1rem auto 2rem; max-width: 600px;">Join our community today and take the first step towards a stronger, healthier, and more confident you. Your journey starts now.</p>
+                <a href="#" class="btn">Join Now</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <ul class="footer-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#programs">Programs</a></li>
+                <li><a href="#trainers">Trainers</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+            </ul>
+             <ul class="social-icons">
+                <li><a href="#" aria-label="Facebook"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.494v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg></a></li>
+                <li><a href="#" aria-label="Instagram"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.27.058 2.122.212 2.88.478.78.27 1.416.632 2.046 1.262.63.63 1 1.266 1.262 2.046.266.758.42 1.61.478 2.88.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.058 1.27-.212 2.122-.478 2.88-.27.78-.632 1.416-1.262 2.046-.63.63-1.266 1-2.046 1.262-.758.266-1.61.42-2.88.478-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.27-.058-2.122-.212-2.88-.478-.78-.27-1.416-.632-2.046-1.262-.63-.63-1-1.266-1.262-2.046-.266-.758-.42-1.61-.478-2.88-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.058-1.27.212-2.122.478-2.88.27-.78.632-1.416 1.262-2.046.63-.63 1.266-1 2.046-1.262.758-.266 1.61-.42 2.88-.478 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-1.356.06-2.305.25-3.122.566-.85.32-1.583.75-2.298 1.465-.715.715-1.145 1.448-1.465 2.298-.316.817-.506 1.766-.566 3.122-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.06 1.356.25 2.305.566 3.122.32.85.75 1.583 1.465 2.298.715.715 1.448 1.145 2.298 1.465.817.316 1.766.506 3.122.566 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c1.356-.06 2.305-.25 3.122-.566.85-.32 1.583-.75 2.298-1.465.715-.715 1.145-1.448 1.465-2.298.316-.817-.506-1.766-.566-3.122.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.06-1.356-.25-2.305-.566-3.122-.32-.85-.75-1.583-1.465-2.298-.715-.715-1.448-1.145-2.298-1.465-.817-.316-1.766-.506-3.122-.566-1.28-.058-1.688-.072-4.947-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.441s.645 1.441 1.441 1.441 1.441-.645 1.441-1.441-.645-1.441-1.441-1.441z"/></svg></a></li>
+                <li><a href="#" aria-label="Twitter"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616v.064c0 2.297 1.634 4.209 3.805 4.649-.62.167-1.282.204-1.945.177.59 1.884 2.304 3.256 4.34 3.293-1.623 1.276-3.666 2.035-5.88 2.035-.38 0-.755-.022-1.124-.066 2.106 1.352 4.606 2.148 7.32 2.148 8.778 0 13.59-7.277 13.59-13.588 0-.206-.005-.411-.013-.615.932-.67 1.733-1.512 2.37-2.457z"/></svg></a></li>
+            </ul>
+            <p class="copyright">&copy; 2025 TransformFit. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.getElementById('calorie-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const gender = document.getElementById('gender').value;
+            const age = parseInt(document.getElementById('age').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+
+            if(isNaN(age) || isNaN(weight) || isNaN(height)) {
+                // Replaced alert with a more user-friendly message display
+                const resultDiv = document.getElementById('result-text');
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = '<p style="color: #EF4444;">Please enter valid numbers for all fields.</p>';
+                return;
+            }
+
+            let bmr;
+            // Mifflin-St Jeor Equation
+            if (gender === 'male') {
+                bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+            } else {
+                bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+            }
+            
+            // Restore the original result text structure before showing the new result
+            const resultDiv = document.getElementById('result-text');
+            resultDiv.innerHTML = `
+                <h3>Your Estimated Daily Needs</h3>
+                <p class="calorie-display"><span id="calorie-result">0</span> <span>kcal</span></p>
+                <p>This is your Basal Metabolic Rate (BMR), the calories your body needs at rest.</p>
+            `;
+            document.getElementById('calorie-result').textContent = Math.round(bmr);
+            resultDiv.style.display = 'block';
+        });
+    </script>
+
+</body>
+</html>
+
